@@ -1,0 +1,39 @@
+import {Module} from '@nestjs/common';
+import {ConfigModule} from "@nestjs/config";
+import {UsersModule} from './users/users.module';
+import {AuthModule} from './auth/auth.module';
+import {SequelizeModule} from "@nestjs/sequelize";
+import {User} from "./users/users.model";
+import {TokensModule} from './tokens/tokens.module';
+import {ConfigModule as Config} from './config/config.module';
+import {TokensModel} from "./tokens/tokens.model";
+import { MailModule } from './mail/mail.module';
+import { ResumeModule } from './resume/resume.module';
+import {ResumesModel} from "./resume/resume.model";
+
+@Module({
+    imports: [ConfigModule.forRoot({
+        envFilePath: '.env',
+        isGlobal: true
+    }), UsersModule, AuthModule,
+        SequelizeModule.forRoot({
+            dialect: 'postgres',
+            host: process.env.POSTGRES_HOST,
+            port: Number(process.env.POSTGRES_PORT),
+            username: process.env.POSTGRES_USER,
+            password: process.env.POSTGRES_PASSWORD,
+            database: process.env.POSTGRES_DB,
+            synchronize: true,
+            models: [User, TokensModel,ResumesModel],
+            autoLoadModels: true
+        }),
+        TokensModule,
+        Config,
+        MailModule,
+        ResumeModule],
+
+    controllers: [],
+    providers: [],
+})
+export class AppModule {
+}
