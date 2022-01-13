@@ -1,3 +1,5 @@
+import {CreateJobHistoryDto} from "./createJobHistory.dto";
+
 export class CreateResumeDto {
-    userId: number
+    jobHistory: CreateJobHistoryDto[]
 }

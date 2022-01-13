@@ -9,7 +9,6 @@ export class AuthDto {
     @Length(4, 16, {message: "Должно быть минимум 4 и максимум 16 символов"})
     username: string
 
-    @IsBoolean({message: "Должно быть булевым значением"})
     isCompany?:boolean
 
     @IsString({message: "Должно быть строкой"})

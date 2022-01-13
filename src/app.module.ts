@@ -7,9 +7,13 @@ import {User} from "./users/users.model";
 import {TokensModule} from './tokens/tokens.module';
 import {ConfigModule as Config} from './config/config.module';
 import {TokensModel} from "./tokens/tokens.model";
-import { MailModule } from './mail/mail.module';
-import { ResumeModule } from './resume/resume.module';
+import {MailModule} from './mail/mail.module';
+import {ResumeModule} from './resume/resume.module';
 import {ResumesModel} from "./resume/resume.model";
+import {JobHistoryModule} from './resume/job_history/job-history.module';
+import {JobHistoryModel} from "./resume/job_history/job-history.model";
+import {DirectionsModule} from './directions/directions.module';
+import {DirectionModel} from "./directions/directions.model";
 
 @Module({
     imports: [ConfigModule.forRoot({
@@ -24,13 +28,15 @@ import {ResumesModel} from "./resume/resume.model";
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
             synchronize: true,
-            models: [User, TokensModel,ResumesModel],
+            models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel],
             autoLoadModels: true
         }),
         TokensModule,
         Config,
         MailModule,
-        ResumeModule],
+        ResumeModule,
+        JobHistoryModule,
+        DirectionsModule],
 
     controllers: [],
     providers: [],

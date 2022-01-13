@@ -1,6 +1,6 @@
 import {Controller, Get, Req} from '@nestjs/common';
 import {UsersService} from "./users.service";
-import {CustomRequest} from "../midllewares/auth-middleware";
+import {CustomRequest} from "../guards/roles.guard";
 
 @Controller('users')
 export class UsersController {

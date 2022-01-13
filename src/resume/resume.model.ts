@@ -1,5 +1,6 @@
-import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
 import {User} from "../users/users.model";
+import {JobHistoryModel} from "./job_history/job-history.model";
 
 interface ResumeAddAttrs {
     userId: number
@@ -15,4 +16,7 @@ export class ResumesModel extends Model<ResumesModel, ResumeAddAttrs> {
 
     @BelongsTo(() => User)
     user: User
+
+    @HasMany(() => JobHistoryModel)
+    jobHistoryModels: JobHistoryModel[]
 }
