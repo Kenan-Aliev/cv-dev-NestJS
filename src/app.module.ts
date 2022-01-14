@@ -16,7 +16,11 @@ import {DirectionsModule} from './directions/directions.module';
 import {DirectionModel} from "./directions/directions.model";
 
 @Module({
-    imports: [UsersModule, AuthModule,
+    imports: [ConfigModule.forRoot({
+        envFilePath: `${process.env.NODE_ENV === 'production' ? '.prod.env' : '.env'}`,
+        // ignoreEnvFile: true,
+        isGlobal: true
+    }), UsersModule, AuthModule,
         SequelizeModule.forRoot({
             dialect: 'postgres',
             host: process.env.POSTGRES_HOST,

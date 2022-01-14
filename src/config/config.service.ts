@@ -6,9 +6,11 @@ import * as path from 'path'
 @Injectable()
 export class ConfigService {
     private readonly envConfig
+    private readonly envFile
 
     constructor() {
-        this.envConfig = dotenv.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '.env')))
+        this.envFile = process.env.NODE_ENV === 'production' ? '.prod.env' : '.env'
+        this.envConfig = dotenv.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', `${this.envFile}`)))
     }
 
     get jwtSecret(): string {
