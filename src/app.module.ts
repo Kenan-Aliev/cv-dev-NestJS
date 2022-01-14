@@ -31,13 +31,13 @@ import {DirectionModel} from "./directions/directions.model";
             synchronize: true,
             models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel],
             autoLoadModels: true,
-            ssl: true,
-            dialectOptions: {
-                ssl: {
-                    require: true,
-                    rejectUnauthorized: false
-                }
-            }
+            // ssl: true,
+            // dialectOptions: {
+            //     ssl: {
+            //         require: true,
+            //         rejectUnauthorized: false
+            //     }
+            // }
         }),
         TokensModule,
         Config,

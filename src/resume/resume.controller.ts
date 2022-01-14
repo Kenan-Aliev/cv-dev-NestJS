@@ -3,18 +3,31 @@ import {ResumeService} from "./resume.service";
 import {Roles} from "../guards/roles-decorator.guard";
 import {CustomRequest, RolesGuard} from "../guards/roles.guard";
 import {CreateResumeDto} from "./dto/create-resume.dto";
+import {ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ResumesModel} from "./resume.model";
 
+@ApiTags('Resume')
 @Controller('resume')
 export class ResumeController {
     constructor(private readonly resumeService: ResumeService) {
     }
 
+    @ApiBearerAuth()
+    @ApiOperation({summary: "Добавление резюме", description: 'Доступно только для разработчиков'})
+    @ApiBody({
+        type: CreateResumeDto
+    })
+    @ApiResponse({
+        type: ResumesModel
+    })
     @Roles('DEVELOPER')
     @UseGuards(RolesGuard)
     @Post('/create')
     createResume(@Req() req: CustomRequest, @Body() dto: CreateResumeDto) {
         return this.resumeService.createResume(req, dto)
     }
+
+
 
     @Roles('COMPANY')
     @UseGuards(RolesGuard)

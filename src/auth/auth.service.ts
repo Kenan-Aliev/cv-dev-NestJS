@@ -3,7 +3,7 @@ import {UsersService} from "../users/users.service";
 import * as bcrypt from 'bcrypt'
 import {TokensService} from "../tokens/tokens.service";
 import * as uuid from 'uuid'
-import {AuthDto} from "./dto/registration.dto";
+import {RegistrationDto} from "./dto/registration.dto";
 import {MailService} from "../mail/mail.service";
 import {LoginDto} from "./dto/login.dto";
 
@@ -13,7 +13,7 @@ export class AuthService {
                 private readonly mailService: MailService) {
     }
 
-    async registration(dto: AuthDto) {
+    async registration(dto: RegistrationDto) {
         if (!dto.email || !dto.password) {
             throw new HttpException('Заполните все поля', HttpStatus.BAD_REQUEST)
         }
