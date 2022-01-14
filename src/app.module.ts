@@ -17,7 +17,7 @@ import {DirectionModel} from "./directions/directions.model";
 
 @Module({
     imports: [ConfigModule.forRoot({
-        envFilePath: '.env',
+        // envFilePath: '.env',
         ignoreEnvFile: true,
         isGlobal: true
     }), UsersModule, AuthModule,
