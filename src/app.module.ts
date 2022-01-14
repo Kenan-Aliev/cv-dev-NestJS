@@ -30,7 +30,10 @@ import {DirectionModel} from "./directions/directions.model";
             database: process.env.POSTGRES_DB,
             synchronize: true,
             models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel],
-            autoLoadModels: true
+            autoLoadModels: true,
+            dialectOptions: {
+                ssl: true
+            }
         }),
         TokensModule,
         Config,
