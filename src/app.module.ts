@@ -34,7 +34,8 @@ import {DirectionModel} from "./directions/directions.model";
             ssl: true,
             dialectOptions: {
                 ssl: {
-                    require: true
+                    require: true,
+                    rejectUnauthorized: false
                 }
             }
         }),
