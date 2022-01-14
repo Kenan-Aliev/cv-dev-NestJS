@@ -18,6 +18,7 @@ import {DirectionModel} from "./directions/directions.model";
 @Module({
     imports: [ConfigModule.forRoot({
         envFilePath: '.env',
+        ignoreEnvFile: true,
         isGlobal: true
     }), UsersModule, AuthModule,
         SequelizeModule.forRoot({
