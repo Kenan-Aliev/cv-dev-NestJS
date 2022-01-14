@@ -28,11 +28,14 @@ import {DirectionModel} from "./directions/directions.model";
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            synchronize: true,
+            synchronize: false,
             models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel],
             autoLoadModels: true,
+            ssl: true,
             dialectOptions: {
-                ssl: true
+                ssl: {
+                    require: true
+                }
             }
         }),
         TokensModule,
