@@ -35,13 +35,13 @@ import {VacancyModel} from "./vacancy/vacancy.model";
             synchronize: true,
             models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel, Job_historyTasksModel, VacancyModel],
             autoLoadModels: true,
-            // ssl: true,
-            // dialectOptions: {
-            //     ssl: {
-            //         require: true,
-            //         rejectUnauthorized: false
-            //     }
-            // }
+            ssl: true,
+            dialectOptions: {
+                ssl: {
+                    require: true,
+                    rejectUnauthorized: false
+                }
+            }
         }),
         TokensModule,
         Config,
