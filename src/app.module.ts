@@ -22,7 +22,7 @@ import {VacancyModel} from "./vacancy/vacancy.model";
 @Module({
     imports: [ConfigModule.forRoot({
         envFilePath: `${process.env.NODE_ENV === 'production' ? '.prod.env' : '.env'}`,
-        // ignoreEnvFile: true,
+           // ignoreEnvFile: true,
         isGlobal: true
     }), UsersModule, AuthModule,
         SequelizeModule.forRoot({
