@@ -14,12 +14,14 @@ export class AuthService {
     }
 
     async registration(dto: RegistrationDto) {
-        if (!dto.email || !dto.password) {
+        if (!dto.email || !dto.username || !dto.password) {
             throw new HttpException('Заполните все поля', HttpStatus.BAD_REQUEST)
         }
-        const candidate = await this.userService.getUserByEmail(dto.email)
-        if (candidate) {
+        const candidate = await this.userService.getUserByEmail(dto.email, dto.username)
+        if (candidate && candidate.email === dto.email) {
             throw new HttpException(`Пользователь с email ${dto.email} уже существует`, HttpStatus.BAD_REQUEST)
+        } else if (candidate && candidate.username === dto.username) {
+            throw new HttpException(`Пользователь с именем ${dto.username} уже существует`, HttpStatus.BAD_REQUEST)
         }
         const activationLink = uuid.v4()
         const hashPassword = await bcrypt.hash(dto.password, 5)

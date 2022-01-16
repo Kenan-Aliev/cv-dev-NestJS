@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {UserCreateDto} from "./dto/user-create.dto";
 import {InjectModel} from "@nestjs/sequelize";
 import {User} from "./users.model";
+import {Op} from 'sequelize'
 
 @Injectable()
 export class UsersService {
@@ -13,8 +14,14 @@ export class UsersService {
         return user
     }
 
-    async getUserByEmail(email: string) {
-        const user = await this.userRepository.findOne({where: {email}})
+    async getUserByEmail(email: string, username?: string) {
+        let user
+        if (username) {
+            user = await this.userRepository.findOne({where: {[Op.or]: [{email}, {username}]}})
+        } else {
+            user = await this.userRepository.findOne({where: {email}})
+        }
+
         return user
     }
 
