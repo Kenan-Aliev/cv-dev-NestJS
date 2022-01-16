@@ -33,13 +33,13 @@ import {Job_historyTasksModule} from "./resume/job_historyTasks/job_historyTasks
             synchronize: true,
             models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel, Job_historyTasksModel],
             autoLoadModels: true,
-            // ssl: true,
-            // dialectOptions: {
-            //     ssl: {
-            //         require: true,
-            //         rejectUnauthorized: false
-            //     }
-            // }
+            ssl: true,
+            dialectOptions: {
+                ssl: {
+                    require: true,
+                    rejectUnauthorized: false
+                }
+            }
         }),
         TokensModule,
         Config,
