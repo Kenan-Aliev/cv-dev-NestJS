@@ -21,5 +21,5 @@ export class ResumesModel extends Model<ResumesModel, ResumeAddAttrs> {
     user: User
 
     @HasMany(() => JobHistoryModel)
-    jobHistoryModels: JobHistoryModel[]
+    jobHistory: JobHistoryModel[]
 }

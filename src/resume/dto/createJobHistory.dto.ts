@@ -12,4 +12,7 @@ export class CreateJobHistoryDto {
 
     @ApiProperty()
     direction_name: string
+
+    @ApiProperty()
+    tasks: string[]
 }

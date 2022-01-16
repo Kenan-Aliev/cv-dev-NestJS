@@ -24,12 +24,12 @@ export class ResumeController {
     @UseGuards(RolesGuard)
     @Post('/create')
     createResume(@Req() req: CustomRequest, @Body() dto: CreateResumeDto) {
+        console.log(dto)
         return this.resumeService.createResume(req, dto)
     }
 
 
-
-    @Roles('COMPANY')
+    @Roles('COMPANY','DEVELOPER')
     @UseGuards(RolesGuard)
     @Get('/get/:resumeId')
     getResumeById(@Param('resumeId') resumeId) {

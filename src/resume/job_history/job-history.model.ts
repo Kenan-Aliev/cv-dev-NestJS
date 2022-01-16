@@ -1,6 +1,7 @@
-import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table} from "sequelize-typescript";
 import {ResumesModel} from "../resume.model";
 import {DirectionModel} from "../../directions/directions.model";
+import {Job_historyTasksModel} from "../job_historyTasks/job_historyTasks.model";
 
 interface JobHistoryAddAttrs {
     start_date: Date
@@ -36,4 +37,8 @@ export class JobHistoryModel extends Model<JobHistoryModel, JobHistoryAddAttrs> 
 
     @BelongsTo(() => DirectionModel)
     direction: DirectionModel
+
+
+    @HasOne(() => Job_historyTasksModel)
+    job_historyTasks: Job_historyTasksModel
 }

@@ -8,6 +8,7 @@ import {CreateResumeDto} from "./dto/create-resume.dto";
 import {User} from "../users/users.model";
 import {JobHistoryModel} from "./job_history/job-history.model";
 import {DirectionModel} from "../directions/directions.model";
+import {Job_historyTasksModel} from "./job_historyTasks/job_historyTasks.model";
 
 @Injectable()
 export class ResumeService {
@@ -18,7 +19,7 @@ export class ResumeService {
     async createResume(req: CustomRequest, dto: CreateResumeDto) {
         const resume = await this.resumesRepository.create({userId: req.user.id})
         const jobHistories = await this.createJobHistory(dto.jobHistory, resume.id)
-        await resume.$set('jobHistoryModels', [...jobHistories])
+        await resume.$set('jobHistory', [...jobHistories])
         return resume
     }
 
@@ -40,7 +41,7 @@ export class ResumeService {
             },
                 {
                     model: JobHistoryModel,
-                    include: [DirectionModel]
+                    include: [DirectionModel, Job_historyTasksModel]
                 }]
         })
         return resume

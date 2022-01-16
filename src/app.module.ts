@@ -14,6 +14,8 @@ import {JobHistoryModule} from './resume/job_history/job-history.module';
 import {JobHistoryModel} from "./resume/job_history/job-history.model";
 import {DirectionsModule} from './directions/directions.module';
 import {DirectionModel} from "./directions/directions.model";
+import {Job_historyTasksModel} from "./resume/job_historyTasks/job_historyTasks.model";
+import {Job_historyTasksModule} from "./resume/job_historyTasks/job_historyTasks.module";
 
 @Module({
     imports: [ConfigModule.forRoot({
@@ -29,22 +31,23 @@ import {DirectionModel} from "./directions/directions.model";
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
             synchronize: true,
-            models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel],
+            models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel, Job_historyTasksModel],
             autoLoadModels: true,
-            ssl: true,
-            dialectOptions: {
-                ssl: {
-                    require: true,
-                    rejectUnauthorized: false
-                }
-            }
+            // ssl: true,
+            // dialectOptions: {
+            //     ssl: {
+            //         require: true,
+            //         rejectUnauthorized: false
+            //     }
+            // }
         }),
         TokensModule,
         Config,
         MailModule,
         ResumeModule,
         JobHistoryModule,
-        DirectionsModule],
+        DirectionsModule,
+        Job_historyTasksModule],
 
     controllers: [],
     providers: [],
