@@ -3,7 +3,7 @@ import {ResumeService} from "./resume.service";
 import {Roles} from "../guards/roles-decorator.guard";
 import {CustomRequest, RolesGuard} from "../guards/roles.guard";
 import {CreateResumeDto} from "./dto/create-resume.dto";
-import {ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {ResumesModel} from "./resume.model";
 
 @ApiTags('Resume')
@@ -29,6 +29,14 @@ export class ResumeController {
     }
 
 
+    @ApiBearerAuth()
+    @ApiOperation({summary: "Получение резюме по его ID", description: 'Доступно только для компаний'})
+    @ApiParam({
+        name: 'resumeId'
+    })
+    @ApiResponse({
+        description: ' Возвращает модель резюме'
+    })
     @Roles('COMPANY')
     @UseGuards(RolesGuard)
     @Get('/get/:resumeId')
@@ -36,6 +44,12 @@ export class ResumeController {
         return this.resumeService.getResumeById(Number(resumeId))
     }
 
+
+    @ApiBearerAuth()
+    @ApiOperation({summary: "Получение резюме разработчика", description: 'Доступно только для разработчиков'})
+    @ApiResponse({
+        description: ' Возвращает модель резюме'
+    })
     @Roles('DEVELOPER')
     @UseGuards(RolesGuard)
     @Get('/getMyResume')
