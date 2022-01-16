@@ -1,5 +1,6 @@
 import {Column, DataType, HasMany, Model, Table} from "sequelize-typescript";
 import {JobHistoryModel} from "../resume/job_history/job-history.model";
+import {VacancyModel} from "../vacancy/vacancy.model";
 
 interface DirectionAddAttrs {
     direction_name: string
@@ -15,4 +16,7 @@ export class DirectionModel extends Model<DirectionModel, DirectionAddAttrs> {
 
     @HasMany(() => JobHistoryModel)
     jobHistoryModels: JobHistoryModel[]
+
+    @HasMany(() => VacancyModel)
+    vacancies: VacancyModel[]
 }

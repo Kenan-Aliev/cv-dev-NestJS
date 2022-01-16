@@ -1,7 +1,8 @@
-import {Column, Model, Table, DataType, HasOne} from 'sequelize-typescript';
+import {Column, Model, Table, DataType, HasOne, HasMany} from 'sequelize-typescript';
 import {TokensModel} from "../tokens/tokens.model";
 import {ResumesModel} from "../resume/resume.model";
 import {ApiProperty} from "@nestjs/swagger";
+import {VacancyModel} from "../vacancy/vacancy.model";
 
 
 interface UserCreationAttrs {
@@ -59,4 +60,7 @@ export class User extends Model<User, UserCreationAttrs> {
 
     @HasOne(() => ResumesModel)
     resume: ResumesModel
+
+    @HasMany(() => VacancyModel)
+    vacancies: VacancyModel
 }

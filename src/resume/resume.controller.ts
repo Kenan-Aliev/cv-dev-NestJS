@@ -29,11 +29,18 @@ export class ResumeController {
     }
 
 
-    @Roles('COMPANY','DEVELOPER')
+    @Roles('COMPANY')
     @UseGuards(RolesGuard)
     @Get('/get/:resumeId')
     getResumeById(@Param('resumeId') resumeId) {
-        return this.resumeService.getResume(Number(resumeId))
+        return this.resumeService.getResumeById(Number(resumeId))
+    }
+
+    @Roles('DEVELOPER')
+    @UseGuards(RolesGuard)
+    @Get('/getMyResume')
+    getMyResume(@Req() req: CustomRequest) {
+        return this.resumeService.getUserResume(req.user.id)
     }
 
 
