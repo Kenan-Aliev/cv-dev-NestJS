@@ -9,13 +9,15 @@ export class Tokens {
 }
 
 
-
 export class LoginResponse {
     @ApiProperty()
     id: number
 
     @ApiProperty()
     email: string
+
+    @ApiProperty()
+    isCompany: boolean
 
     @ApiProperty()
     tokens: Tokens

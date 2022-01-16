@@ -43,7 +43,7 @@ export class AuthService {
 
         const tokens = this.tokensService.generateTokens(user)
         await this.tokensService.saveToken(tokens.refreshToken, user.id)
-        return {id: user.id, email: user.email, tokens}
+        return {id: user.id, email: user.email, isCompany: user.isCompany, tokens}
     }
 
     async activate(activationLink: string) {
