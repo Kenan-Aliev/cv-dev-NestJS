@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {DirectionModel} from "./directions.model";
 import {CreateDirectionDto} from "./dto/create-direction.dto";
+import {Sequelize} from "sequelize-typescript";
 
 @Injectable()
 export class DirectionsService {
@@ -15,8 +16,12 @@ export class DirectionsService {
     }
 
     async getDirectionByName(name: string) {
-        console.log(name)
-        const direction = await this.directionRepository.findOne({where: {direction_name: name}})
+        const direction = await this.directionRepository.findOne({
+            where: {
+                direction_name: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('direction_name')),
+                    'LIKE', '%' + name.toLowerCase() + '%')
+            }
+        })
         return direction
     }
 
