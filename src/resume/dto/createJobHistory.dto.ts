@@ -2,17 +2,17 @@ import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateJobHistoryDto {
     @ApiProperty()
-    start_date: Date
+    from: string
 
     @ApiProperty()
-    end_date: Date
+    to: string
 
     @ApiProperty()
-    company_name: string
+    organization: string
 
     @ApiProperty()
-    direction_name: string
+    sphere: string
 
     @ApiProperty()
-    tasks: string[]
+    responsibilities: string
 }

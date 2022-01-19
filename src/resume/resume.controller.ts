@@ -48,13 +48,13 @@ export class ResumeController {
     @ApiBearerAuth()
     @ApiOperation({summary: "Получение резюме разработчика", description: 'Доступно только для разработчиков'})
     @ApiResponse({
-        description: ' Возвращает модель резюме'
+        description: ' Возвращает все резюме пользователя'
     })
     @Roles('DEVELOPER')
     @UseGuards(RolesGuard)
-    @Get('/getMyResume')
+    @Get('/getMyResumes')
     getMyResume(@Req() req: CustomRequest) {
-        return this.resumeService.getUserResume(req.user.id)
+        return this.resumeService.getUserResumes(req.user.id)
     }
 
 

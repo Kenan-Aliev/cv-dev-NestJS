@@ -14,10 +14,12 @@ import {JobHistoryModule} from './resume/job_history/job-history.module';
 import {JobHistoryModel} from "./resume/job_history/job-history.model";
 import {DirectionsModule} from './directions/directions.module';
 import {DirectionModel} from "./directions/directions.model";
-import {Job_historyTasksModel} from "./resume/job_historyTasks/job_historyTasks.model";
-import {Job_historyTasksModule} from "./resume/job_historyTasks/job_historyTasks.module";
 import {VacancyModule} from './vacancy/vacancy.module';
 import {VacancyModel} from "./vacancy/vacancy.model";
+import {Foreign_languagesModule} from "./resume/foreign_languages/foreign_languages.module";
+import {CoursesModule} from "./resume/courses/courses.module";
+import {Foreign_languagesModel} from "./resume/foreign_languages/foreign_languages.model";
+import {CoursesModel} from "./resume/courses/courses.model";
 
 @Module({
     imports: [ConfigModule.forRoot({
@@ -33,15 +35,15 @@ import {VacancyModel} from "./vacancy/vacancy.model";
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
             synchronize: true,
-            models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel, Job_historyTasksModel, VacancyModel],
+            models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel, Foreign_languagesModel, CoursesModel, VacancyModel],
             autoLoadModels: true,
-            ssl: true,
-            dialectOptions: {
-                ssl: {
-                    require: true,
-                    rejectUnauthorized: false
-                }
-            }
+            // ssl: true,
+            // dialectOptions: {
+            //     ssl: {
+            //         require: true,
+            //         rejectUnauthorized: false
+            //     }
+            // }
         }),
         TokensModule,
         Config,
@@ -49,7 +51,8 @@ import {VacancyModel} from "./vacancy/vacancy.model";
         ResumeModule,
         JobHistoryModule,
         DirectionsModule,
-        Job_historyTasksModule,
+        Foreign_languagesModule,
+        CoursesModule,
         VacancyModule],
 
     controllers: [],

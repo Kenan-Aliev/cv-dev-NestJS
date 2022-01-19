@@ -58,9 +58,9 @@ export class User extends Model<User, UserCreationAttrs> {
     @HasOne(() => TokensModel)
     token: TokensModel
 
-    @HasOne(() => ResumesModel)
-    resume: ResumesModel
+    @HasMany(() => ResumesModel)
+    resumes: ResumesModel[]
 
     @HasMany(() => VacancyModel)
-    vacancies: VacancyModel
+    vacancies: VacancyModel[]
 }
