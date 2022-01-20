@@ -58,8 +58,7 @@ export class AuthController {
             const data = await this.authService.login(dto)
             return res.cookie('refreshToken', data.tokens.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                domain: process.env.CLIENT_URL
+                httpOnly: false
             }).send({...data})
         } catch (e) {
             console.log(e)
