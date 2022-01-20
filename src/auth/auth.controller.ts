@@ -53,7 +53,7 @@ export class AuthController {
     })
     @UsePipes(new ValidationPipe())
     @Post('/login')
-    async login(@Body() dto: LoginDto, @Res({passthrough: true}) res: Response) {
+    async login(@Body() dto: LoginDto, @Res() res: Response) {
         try {
             const data = await this.authService.login(dto)
             return res.cookie('refreshToken', data.tokens.refreshToken, {
@@ -63,7 +63,7 @@ export class AuthController {
             }).send({...data})
         } catch (e) {
             console.log(e)
-            throw new HttpException('Произошла ошибка', HttpStatus.INTERNAL_SERVER_ERROR)
+            return res.send(e)
         }
 
     }
