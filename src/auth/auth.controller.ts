@@ -61,7 +61,7 @@ export class AuthController {
                 httpOnly: true,
                 domain: process.env.CLIENT_URL
             })
-            return res.send({...dataz})
+            return res.send({...data})
         } catch (e) {
             console.log(e)
             throw new HttpException('Произошла ошибка', HttpStatus.INTERNAL_SERVER_ERROR)
