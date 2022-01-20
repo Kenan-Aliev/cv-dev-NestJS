@@ -1,4 +1,16 @@
-import {Body, Controller, Get, Param, Post, Redirect, Req, Res, UsePipes} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpException,
+    HttpStatus,
+    Param,
+    Post,
+    Redirect,
+    Req,
+    Res,
+    UsePipes
+} from '@nestjs/common';
 import {AuthService} from "./auth.service";
 import {RegistrationDto} from "./dto/registration.dto";
 import {Request, Response} from "express";
@@ -42,13 +54,19 @@ export class AuthController {
     @UsePipes(new ValidationPipe())
     @Post('/login')
     async login(@Body() dto: LoginDto, @Res({passthrough: true}) res: Response) {
-        const data = await this.authService.login(dto)
-        res.cookie('refreshToken', data.tokens.refreshToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
-            domain: process.env.CLIENT_URL
-        })
-        return res.json({...data})
+        try {
+            const data = await this.authService.login(dto)
+            res.cookie('refreshToken', data.tokens.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000,
+                httpOnly: true,
+                domain: process.env.CLIENT_URL
+            })
+            return res.send({...dataz})
+        } catch (e) {
+            console.log(e)
+            throw new HttpException('Произошла ошибка', HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+
     }
 
 
