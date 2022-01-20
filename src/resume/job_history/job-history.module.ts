@@ -7,7 +7,7 @@ import {DirectionModel} from "../../directions/directions.model";
 import {DirectionsModule} from "../../directions/directions.module";
 
 @Module({
-    imports: [SequelizeModule.forFeature([JobHistoryModel, ResumesModel, DirectionModel]), DirectionsModule],
+    imports: [SequelizeModule.forFeature([JobHistoryModel, ResumesModel])],
     providers: [JobHistoryService],
     exports: [JobHistoryService]
 })

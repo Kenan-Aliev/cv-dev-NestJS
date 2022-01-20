@@ -86,10 +86,10 @@ export class ResumesModel extends Model<ResumesModel, ResumeAddAttrs> {
     user: User
 
     @HasMany(() => JobHistoryModel)
-    jobHistory: JobHistoryModel[]
+    exp_work: JobHistoryModel[]
 
     @HasMany(() => Foreign_languagesModel)
-    foreignLanguages: Foreign_languagesModel[]
+    foreign_languages: Foreign_languagesModel[]
 
     @HasMany(() => CoursesModel)
     courses: CoursesModel[]

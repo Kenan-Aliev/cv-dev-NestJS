@@ -28,8 +28,8 @@ export class ResumeService {
         const jobHistories = await this.createJobHistory(dto.exp_work, resume.id)
         const courses = await this.createCourses(dto.courses, resume.id)
         const foreignLanguages = await this.createForeignLanguages(dto.foreign_languages, resume.id)
-        await resume.$set('jobHistory', [...jobHistories])
-        await resume.$set('foreignLanguages', [...foreignLanguages])
+        await resume.$set('exp_work', [...jobHistories])
+        await resume.$set('foreign_languages', [...foreignLanguages])
         await resume.$set('courses', [...courses])
         return resume
     }
@@ -87,22 +87,30 @@ export class ResumeService {
 
 
     async getUserResumes(userId: number) {
-        const resumes = await this.resumesRepository.findAll({
+        let resumes: ResumesModel[] = await this.resumesRepository.findAll({
             where: {userId},
-            include: [{
-                model: User,
-                attributes: ['email', 'username']
+            attributes: {
+                exclude: ['userId']
             },
+            include: [
                 {
                     model: JobHistoryModel,
-                    include: [DirectionModel]
+                    attributes: {
+                        exclude: ['id', 'resumeId',]
+                    },
                 },
                 {
-                    model: CoursesModel
+                    model: CoursesModel,
+                    attributes: {
+                        exclude: ['id', 'resumeId']
+                    }
                 },
                 {
-                    model: Foreign_languagesModel
-                }]
+                    model: Foreign_languagesModel,
+                    attributes: {
+                        exclude: ['id', 'resumeId']
+                    }
+                }],
         })
         return resumes
 

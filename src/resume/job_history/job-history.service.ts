@@ -7,19 +7,17 @@ import {DirectionsService} from "../../directions/directions.service";
 
 @Injectable()
 export class JobHistoryService {
-    constructor(@InjectModel(JobHistoryModel) private readonly jobHistoryRepository: typeof JobHistoryModel,
-                private readonly directionService: DirectionsService) {
+    constructor(@InjectModel(JobHistoryModel) private readonly jobHistoryRepository: typeof JobHistoryModel) {
 
     }
 
     async addJobHistory(dto: CreateJobHistoryDto, resumeId: number) {
-        const direction = await this.directionService.getDirectionByName(dto.sphere)
         const jobHistory = await this.jobHistoryRepository.create({
             from: dto.from,
             to: dto.to,
             organization: dto.organization,
             responsibilities: dto.responsibilities,
-            directionId: direction.id,
+            sphere: dto.sphere,
             resumeId
         })
         return jobHistory.id

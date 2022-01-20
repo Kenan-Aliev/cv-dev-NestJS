@@ -1,13 +1,12 @@
 import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
 import {ResumesModel} from "../resume.model";
-import {DirectionModel} from "../../directions/directions.model";
 
 interface JobHistoryAddAttrs {
     from: string
     to: string
     organization: string
     responsibilities: string
-    directionId: number
+    sphere: string
     resumeId: number
 }
 
@@ -28,6 +27,9 @@ export class JobHistoryModel extends Model<JobHistoryModel, JobHistoryAddAttrs> 
     @Column({type: DataType.STRING, allowNull: false})
     responsibilities: string
 
+    @Column({type: DataType.STRING, allowNull: false})
+    sphere: string
+
 
     @ForeignKey(() => ResumesModel)
     resumeId: number
@@ -35,10 +37,4 @@ export class JobHistoryModel extends Model<JobHistoryModel, JobHistoryAddAttrs> 
     @BelongsTo(() => ResumesModel)
     resume: ResumesModel
 
-
-    @ForeignKey(() => DirectionModel)
-    directionId: number
-
-    @BelongsTo(() => DirectionModel)
-    direction: DirectionModel
 }
