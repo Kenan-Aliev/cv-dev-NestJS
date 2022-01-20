@@ -66,19 +66,27 @@ export class ResumeService {
 
     async getResumeById(resumeId: number) {
         const resume = await this.resumesRepository.findByPk(resumeId, {
-            include: [{
-                model: User,
-                attributes: ['email', 'username']
+            attributes: {
+                exclude: ['userId']
             },
+            include: [
                 {
                     model: JobHistoryModel,
-                    include: [DirectionModel]
+                    attributes: {
+                        exclude: ['id', 'resumeId',]
+                    },
                 },
                 {
-                    model: CoursesModel
+                    model: CoursesModel,
+                    attributes: {
+                        exclude: ['id', 'resumeId']
+                    }
                 },
                 {
-                    model: Foreign_languagesModel
+                    model: Foreign_languagesModel,
+                    attributes: {
+                        exclude: ['id', 'resumeId']
+                    }
                 }]
         })
         return resume

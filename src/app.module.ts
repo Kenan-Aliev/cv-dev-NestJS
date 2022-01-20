@@ -40,7 +40,7 @@ import {CoursesModel} from "./resume/courses/courses.model";
             synchronize: true,
             models: [User, TokensModel, ResumesModel, JobHistoryModel, DirectionModel, Foreign_languagesModel, CoursesModel, VacancyModel],
             autoLoadModels: true,
-            ssl:  true,
+            ssl: true,
             dialectOptions: {
                 ssl: {
                     require: true,

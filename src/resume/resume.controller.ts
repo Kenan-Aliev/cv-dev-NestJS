@@ -35,6 +35,7 @@ export class ResumeController {
         name: 'resumeId'
     })
     @ApiResponse({
+        type: CreateResumeDto,
         description: ' Возвращает модель резюме'
     })
     @Roles('COMPANY')
@@ -48,6 +49,7 @@ export class ResumeController {
     @ApiBearerAuth()
     @ApiOperation({summary: "Получение резюме разработчика", description: 'Доступно только для разработчиков'})
     @ApiResponse({
+        type: [CreateResumeDto],
         description: ' Возвращает все резюме пользователя'
     })
     @Roles('DEVELOPER')
