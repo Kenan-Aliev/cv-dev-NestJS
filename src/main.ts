@@ -8,12 +8,7 @@ const PORT = Number(process.env.PORT) || 5000
 async function start() {
     const app = await NestFactory.create(AppModule);
     app.use(cookieParser());
-    app.enableCors(
-        {
-            credentials: true,
-            origin: process.env.CLIENT_URL
-        }
-    )
+    app.enableCors()
     const config = new DocumentBuilder()
         .setTitle('CV-DEV API')
         .setDescription('Cv-Dev Api Documentation')
