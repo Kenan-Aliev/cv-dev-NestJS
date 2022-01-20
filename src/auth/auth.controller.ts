@@ -56,12 +56,11 @@ export class AuthController {
     async login(@Body() dto: LoginDto, @Res({passthrough: true}) res: Response) {
         try {
             const data = await this.authService.login(dto)
-            res.cookie('refreshToken', data.tokens.refreshToken, {
+            return res.cookie('refreshToken', data.tokens.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
                 domain: process.env.CLIENT_URL
-            })
-            return res.send({...data})
+            }).send({...data})
         } catch (e) {
             console.log(e)
             throw new HttpException('Произошла ошибка', HttpStatus.INTERNAL_SERVER_ERROR)
