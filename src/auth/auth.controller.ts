@@ -2,24 +2,23 @@ import {
     Body,
     Controller,
     Get,
-    HttpException,
-    HttpStatus,
     Param,
     Post,
     Redirect,
     Req,
-    Res,
+    Res, UploadedFile, UseInterceptors,
     UsePipes
 } from '@nestjs/common';
 import {AuthService} from "./auth.service";
-import {RegistrationDto} from "./dto/registration.dto";
+import {RegistrationDeveloperDto} from "./dto/registrationDeveloper.dto";
 import {Request, Response} from "express";
 import {ValidationPipe} from "../pipes/validation.pipe";
 import {LoginDto} from "./dto/login.dto";
 import {ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {User} from "../users/users.model";
 import {RegisterResponse} from "../responseTypes/Register";
 import {LoginResponse} from "../responseTypes/Login";
+import {FileInterceptor} from "@nestjs/platform-express";
+import {RegistrationCompanyDto} from "./dto/registrationCompany.dto";
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -29,17 +28,33 @@ export class AuthController {
 
 
     @UsePipes(new ValidationPipe())
-    @ApiOperation({summary: "Регистрация пользователя"})
+    @ApiOperation({summary: "Регистрация разработчика"})
     @ApiBody({
-        type: RegistrationDto
+        type: RegistrationDeveloperDto
     })
-    @Post('/registration')
+    @Post('/developerRegistration')
     @ApiCreatedResponse({
         type: RegisterResponse,
         description: 'Возвращает модель пользователя и сообщение об отправке сообщения на почту'
     })
-    registration(@Body() dto: RegistrationDto) {
-        return this.authService.registration(dto)
+    registrationDeveloper(@Body() dto: RegistrationDeveloperDto, avatar = "") {
+        return this.authService.registration(dto, avatar)
+    }
+
+
+    @UsePipes(new ValidationPipe())
+    @ApiOperation({summary: "Регистрация компании"})
+    @ApiBody({
+        type: RegistrationCompanyDto
+    })
+    @ApiCreatedResponse({
+        type: RegisterResponse,
+        description: 'Возвращает модель пользователя и сообщение об отправке сообщения на почту'
+    })
+    @Post('/companyRegistration')
+    @UseInterceptors(FileInterceptor('avatar'))
+    registrationCompany(@Body() dto: RegistrationCompanyDto, @UploadedFile() avatar: string) {
+        return this.authService.registration(dto, avatar)
     }
 
 

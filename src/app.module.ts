@@ -20,6 +20,10 @@ import {Foreign_languagesModule} from "./resume/foreign_languages/foreign_langua
 import {CoursesModule} from "./resume/courses/courses.module";
 import {Foreign_languagesModel} from "./resume/foreign_languages/foreign_languages.model";
 import {CoursesModel} from "./resume/courses/courses.model";
+import {FilesService} from './files/files.service';
+import {FilesModule} from './files/files.module';
+import * as path from "path";
+import {ServeStaticModule} from '@nestjs/serve-static';
 
 @Module({
     imports: [ConfigModule.forRoot({
@@ -27,6 +31,9 @@ import {CoursesModel} from "./resume/courses/courses.model";
         // ignoreEnvFile: true,
         isGlobal: true
     }), UsersModule, AuthModule,
+        ServeStaticModule.forRoot({
+            rootPath: path.resolve(__dirname, 'static')
+        }),
         SequelizeModule.forRoot({
             dialect: 'postgres',
             host: process.env.POSTGRES_HOST,
@@ -56,10 +63,11 @@ import {CoursesModel} from "./resume/courses/courses.model";
         DirectionsModule,
         Foreign_languagesModule,
         CoursesModule,
-        VacancyModule],
+        VacancyModule,
+        FilesModule],
 
     controllers: [],
-    providers: [],
+    providers: [FilesService],
 })
 export class AppModule {
 }

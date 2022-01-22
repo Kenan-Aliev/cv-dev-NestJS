@@ -41,10 +41,10 @@ export class RolesGuard implements CanActivate {
             const authHeader = req.headers.authorization
             const bearer = authHeader.split(' ')[0]
             const token = authHeader.split(' ')[1]
+            const user = this.jwtService.verify(token)
             if (bearer !== 'Bearer' || !token) {
                 throw new UnauthorizedException({message: "Пользователь не авторизован"})
             }
-            const user = this.jwtService.verify(token)
             req.user = user
             if (!requiredRoles && user) {
                 return true

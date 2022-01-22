@@ -3,17 +3,19 @@ import {UsersService} from "../users/users.service";
 import * as bcrypt from 'bcrypt'
 import {TokensService} from "../tokens/tokens.service";
 import * as uuid from 'uuid'
-import {RegistrationDto} from "./dto/registration.dto";
+import {RegistrationDeveloperDto} from "./dto/registrationDeveloper.dto";
 import {MailService} from "../mail/mail.service";
 import {LoginDto} from "./dto/login.dto";
+import {FilesService} from "../files/files.service";
 
 @Injectable()
 export class AuthService {
     constructor(private readonly userService: UsersService, private tokensService: TokensService,
-                private readonly mailService: MailService) {
+                private readonly mailService: MailService,
+                private readonly filesService: FilesService) {
     }
 
-    async registration(dto: RegistrationDto) {
+    async registration(dto: RegistrationDeveloperDto, avatar) {
         if (!dto.email || !dto.username || !dto.password) {
             throw new HttpException('Заполните все поля', HttpStatus.BAD_REQUEST)
         }
@@ -24,14 +26,23 @@ export class AuthService {
             throw new HttpException(`Пользователь с именем ${dto.username} уже существует`, HttpStatus.BAD_REQUEST)
         }
         const activationLink = uuid.v4()
+        let fileName
+        if (avatar) {
+            fileName = await this.filesService.createFile(avatar)
+        }
         const hashPassword = await bcrypt.hash(dto.password, 5)
         const user = await this.userService.createUser({...dto, activationLink, password: hashPassword})
+        if (fileName) {
+            user.avatar = fileName
+            await user.save()
+        }
         await this.mailService.sendConfirmationLetter(user.email, activationLink)
         return {
             message: 'На вашу почту отправлено письмо для активации аккаунта',
             user
         }
     }
+
 
     async login(dto: LoginDto) {
         const user = await this.userService.getUserByEmail(dto.email)
@@ -45,7 +56,7 @@ export class AuthService {
 
         const tokens = this.tokensService.generateTokens(user)
         await this.tokensService.saveToken(tokens.refreshToken, user.id)
-        return {id: user.id, email: user.email, isCompany: user.isCompany, tokens}
+        return {id: user.id, email: user.email, avatar: user?.avatar, isCompany: user.isCompany, tokens}
     }
 
     async activate(activationLink: string) {

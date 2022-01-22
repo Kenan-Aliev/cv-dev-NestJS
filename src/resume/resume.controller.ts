@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Req, UseGuards} from '@nestjs/common';
 import {ResumeService} from "./resume.service";
 import {Roles} from "../guards/roles-decorator.guard";
 import {CustomRequest, RolesGuard} from "../guards/roles.guard";
@@ -24,7 +24,6 @@ export class ResumeController {
     @UseGuards(RolesGuard)
     @Post('/create')
     createResume(@Req() req: CustomRequest, @Body() dto: CreateResumeDto) {
-        console.log(dto)
         return this.resumeService.createResume(req, dto)
     }
 
@@ -41,10 +40,23 @@ export class ResumeController {
     @Roles('COMPANY')
     @UseGuards(RolesGuard)
     @Get('/get/:resumeId')
-    getResumeById(@Param('resumeId') resumeId) {
-        return this.resumeService.getResumeById(Number(resumeId))
+    getResumeById(@Param('resumeId') resumeId, userId = null) {
+        return this.resumeService.getResumeById(Number(resumeId), userId)
     }
 
+
+    @ApiBearerAuth()
+    @ApiOperation({summary: "Получение резюме разработчика по ID", description: 'Доступно только для разработчиков'})
+    @ApiResponse({
+        type: CreateResumeDto,
+        description: ' Возвращает одно резюме пользователя'
+    })
+    @Roles('DEVELOPER')
+    @UseGuards(RolesGuard)
+    @Get('/getMyResume/:id')
+    getMyResumeById(@Param('id') resumeId: string, @Req() req: CustomRequest) {
+        return this.resumeService.getResumeById(Number(resumeId), req.user.id)
+    }
 
     @ApiBearerAuth()
     @ApiOperation({summary: "Получение резюме разработчика", description: 'Доступно только для разработчиков'})
@@ -57,6 +69,19 @@ export class ResumeController {
     @Get('/getMyResumes')
     getMyResume(@Req() req: CustomRequest) {
         return this.resumeService.getUserResumes(req.user.id)
+    }
+
+
+    @ApiBearerAuth()
+    @ApiOperation({summary: "Удаление резюме разработчика по ID", description: 'Доступно только для разработчиков'})
+    @ApiResponse({
+        description: 'Удаляет резюме пользователя'
+    })
+    @Roles('DEVELOPER')
+    @UseGuards(RolesGuard)
+    @Delete('/deleteMyResume/:id')
+    deleteMyResume(@Param('id') resumeId: string, @Req() req: CustomRequest) {
+        return this.resumeService.deleteMyResume(Number(resumeId), req.user.id)
     }
 
 

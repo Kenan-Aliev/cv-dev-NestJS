@@ -17,6 +17,9 @@ export class LoginResponse {
     email: string
 
     @ApiProperty()
+    avatar: string | null
+
+    @ApiProperty()
     isCompany: boolean
 
     @ApiProperty()

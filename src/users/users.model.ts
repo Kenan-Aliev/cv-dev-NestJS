@@ -9,6 +9,7 @@ interface UserCreationAttrs {
     email: string
     activationLink: string
     isCompany?: boolean
+    avatar?: string
     username: string
     password: string
 }
@@ -38,6 +39,9 @@ export class User extends Model<User, UserCreationAttrs> {
     @Column({type: DataType.BOOLEAN, defaultValue: false})
     isActivated: boolean;
 
+    @ApiProperty()
+    @Column({type: DataType.STRING, allowNull: true})
+    avatar: string
 
     @ApiProperty()
     @Column({type: DataType.BOOLEAN, defaultValue: false})
